@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Structures Guide - Master the Fundamentals</title>
+    <title>Data Structures Guide - Interactive Learning</title>
     <style>
         * {
             margin: 0;
@@ -12,33 +12,34 @@
         }
 
         :root {
-            --primary: #1e40af;
-            --primary-light: #3b82f6;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
             --accent: #f59e0b;
             --accent-light: #fbbf24;
+            --success: #10b981;
             --dark: #0f172a;
             --light: #f8fafc;
             --text: #1e293b;
             --border: #e2e8f0;
-            --success: #10b981;
-            --warning: #ef4444;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             color: var(--text);
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
         }
 
         header {
-            background: var(--dark);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
             color: white;
-            padding: 2rem;
+            padding: 1.5rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         header .container {
@@ -50,21 +51,26 @@
         }
 
         header h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        header p {
-            font-size: 0.9rem;
-            color: #cbd5e1;
-            margin-top: 0.3rem;
+        .logo {
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         nav {
             display: flex;
             gap: 2rem;
-            flex-wrap: wrap;
         }
 
         nav a {
@@ -72,12 +78,24 @@
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
             cursor: pointer;
+            position: relative;
         }
 
-        nav a:hover {
-            color: var(--accent-light);
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         .container {
@@ -86,256 +104,55 @@
             padding: 0 2rem;
         }
 
+        main {
+            background: var(--light);
+            margin: 2rem auto;
+            border-radius: 20px;
+            padding: 3rem 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
         section {
             margin: 3rem 0;
             scroll-margin-top: 100px;
         }
 
         .section-title {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             color: var(--dark);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
         }
 
-        .section-title::before {
+        .section-title::after {
             content: '';
-            width: 4px;
-            height: 2rem;
-            background: var(--primary);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             border-radius: 2px;
         }
 
-        .subsection-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin: 2rem 0 1rem;
-        }
-
         .intro-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--accent);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
             margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            animation: slideUp 0.6s ease-out;
         }
 
-        .content-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .content-box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        }
-
-        .example {
-            background: #f1f5f9;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: var(--dark);
-            border-left: 3px solid var(--primary-light);
-            overflow-x: auto;
-        }
-
-        .checkpoint {
-            background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            border-left: 4px solid var(--accent);
-        }
-
-        .checkpoint-title {
-            font-weight: 700;
-            color: var(--dark);
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .checkpoint-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .option {
-            padding: 0.75rem 1rem;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-
-        .option:hover {
-            background: #fef9e7;
-            border-color: var(--accent);
-        }
-
-        .option input {
-            margin-right: 0.5rem;
-            cursor: pointer;
-        }
-
-        .option label {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-
-        .tree-diagram {
-            background: #f1f5f9;
-            padding: 2rem;
-            border-radius: 8px;
-            font-family: monospace;
-            margin: 1.5rem 0;
-            border-left: 3px solid var(--primary);
-            overflow-x: auto;
-        }
-
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .comparison-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-top: 3px solid var(--primary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .comparison-item h4 {
-            font-size: 1rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .comparison-item ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .comparison-item li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-            font-size: 0.9rem;
-        }
-
-        .comparison-item li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--primary-light);
-            font-weight: bold;
-        }
-
-        .highlight {
-            background: #fef3c7;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        ul, ol {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-        }
-
-        strong {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        footer {
-            background: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1e3a8a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
-        }
-
-        .btn-secondary {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #d97706;
-            transform: translateY(-2px);
-        }
-
-        .success-message {
-            background: #d1fae5;
-            color: var(--success);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            display: none;
-            border-left: 4px solid var(--success);
-        }
-
-        .success-message.show {
-            display: block;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -343,45 +160,537 @@
             }
         }
 
-        .toc {
+        .content-box {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 3rem;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .content-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+        }
+
+        .subsection-title {
+            font-size: 1.6rem;
+            font-weight: 700;
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Animated Array */
+        .array-container {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .array-item {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            animation: popIn 0.5s ease-out backwards;
+            transition: transform 0.3s;
+        }
+
+        .array-item:hover {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .array-item:nth-child(1) { animation-delay: 0.1s; }
+        .array-item:nth-child(2) { animation-delay: 0.2s; }
+        .array-item:nth-child(3) { animation-delay: 0.3s; }
+        .array-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .index {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            display: block;
+        }
+
+        .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        /* Animated Stack */
+        .stack-container {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            min-height: 300px;
+            justify-content: flex-start;
+        }
+
+        .stack-item {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            font-weight: 700;
+            animation: stackPush 0.5s ease-out backwards;
+            transition: all 0.3s;
+        }
+
+        .stack-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        @keyframes stackPush {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animated Queue */
+        .queue-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f1f5f9;
+            border-radius: 16px;
+            overflow-x: auto;
+        }
+
+        .queue-item {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            font-weight: 700;
+            animation: queueEnter 0.5s ease-out backwards;
+            transition: transform 0.3s;
+        }
+
+        .queue-item:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes queueEnter {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* Linked List */
+        .linked-list-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f1f5f9;
+            border-radius: 16px;
+            overflow-x: auto;
+            justify-content: center;
+        }
+
+        .node {
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+            animation: nodeAppear 0.6s ease-out backwards;
+        }
+
+        .node:nth-child(odd) { animation-delay: 0.1s; }
+        .node:nth-child(even) { animation-delay: 0.3s; }
+
+        @keyframes nodeAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .node-data {
+            font-weight: 700;
+            color: var(--primary);
             font-size: 1.1rem;
         }
 
-        .toc ul {
+        .node-pointer {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        .link-arrow {
+            font-size: 2rem;
+            color: var(--primary);
+            animation: slideArrow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes slideArrow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        /* Tree Structure */
+        .tree-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 16px;
+        }
+
+        .tree-level {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .tree-node {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50%;
+            min-width: 80px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            animation: treeGrow 0.8s ease-out backwards;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tree-node:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
+        }
+
+        @keyframes treeGrow {
+            from {
+                opacity: 0;
+                transform: scale(0) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .tree-node.root {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            animation-delay: 0.1s;
+        }
+
+        .tree-node.child1 {
+            animation-delay: 0.3s;
+        }
+
+        .tree-node.child2 {
+            animation-delay: 0.4s;
+        }
+
+        .tree-node.leaf {
+            animation-delay: 0.6s;
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        /* Graph Structure */
+        .graph-container {
+            margin: 2rem 0;
+            padding: 3rem;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 16px;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .graph-nodes {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+        }
+
+        .graph-node {
+            position: absolute;
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            animation: graphPulse 2s ease-in-out infinite;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .graph-node:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 25px rgba(236, 72, 153, 0.6);
+        }
+
+        @keyframes graphPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .graph-node:nth-child(1) { top: 0; left: 0; animation-delay: 0s; }
+        .graph-node:nth-child(2) { top: 0; right: 0; animation-delay: 0.2s; }
+        .graph-node:nth-child(3) { bottom: 0; left: 0; animation-delay: 0.4s; }
+        .graph-node:nth-child(4) { bottom: 0; right: 0; animation-delay: 0.6s; }
+
+        .graph-edge {
+            position: absolute;
+            background: var(--primary);
+            height: 3px;
+            transform-origin: left center;
+            z-index: 1;
+            opacity: 0.6;
+            animation: drawLine 1s ease-out forwards;
+        }
+
+        @keyframes drawLine {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            border-top: 4px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .comparison-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .comparison-item h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkpoint {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+        }
+
+        .checkpoint-title {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .option {
+            padding: 1rem 1.5rem;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            margin-bottom: 0.75rem;
+        }
+
+        .option:hover {
+            background: #fffbeb;
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: var(--success);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            display: none;
+            border-left: 4px solid var(--success);
+            font-weight: 600;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            color: white;
+            margin: 3rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .summary-box h2 {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .summary-box ul {
             list-style: none;
             padding: 0;
-            margin: 0;
         }
 
-        .toc li {
-            margin: 0.5rem 0;
+        .summary-box li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
         }
 
-        .toc a {
-            color: var(--primary-light);
-            text-decoration: none;
-            transition: color 0.3s;
+        .summary-box li:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(10px);
         }
 
-        .toc a:hover {
-            color: var(--primary);
-            text-decoration: underline;
+        .summary-box li::before {
+            content: '✓';
+            background: var(--success);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
         }
 
         @media (max-width: 768px) {
             header .container {
                 flex-direction: column;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             nav {
@@ -391,15 +700,25 @@
             }
 
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
 
-            .comparison-grid {
-                grid-template-columns: 1fr;
+            .array-container,
+            .queue-container,
+            .linked-list-container {
+                overflow-x: auto;
+                justify-content: flex-start;
             }
 
-            .container {
-                padding: 0 1rem;
+            .graph-nodes {
+                max-width: 300px;
+                height: 250px;
+            }
+
+            .graph-node {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -408,11 +727,10 @@
     <header>
         <div class="container">
             <div>
-                <h1>📚 Data Structures</h1>
-                <p>Master the Fundamentals of Organizing Data</p>
+                <h1><span class="logo">📚</span> Data Structures</h1>
             </div>
             <nav>
-                <a onclick="scrollToSection('intro')">Introduction</a>
+                <a onclick="scrollToSection('intro')">Intro</a>
                 <a onclick="scrollToSection('types')">Types</a>
                 <a onclick="scrollToSection('structures')">Structures</a>
                 <a onclick="scrollToSection('advanced')">Advanced</a>
@@ -421,84 +739,64 @@
     </header>
 
     <main class="container">
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h3>📖 Quick Navigation</h3>
-            <ul>
-                <li><a onclick="scrollToSection('intro')">What is Data & Data Structures?</a></li>
-                <li><a onclick="scrollToSection('types')">Two Main Types</a></li>
-                <li><a onclick="scrollToSection('structures')">Learn Each Structure</a></li>
-                <li><a onclick="scrollToSection('advanced')">Advanced Concepts</a></li>
-            </ul>
-        </div>
-
-        <!-- INTRODUCTION SECTION -->
         <section id="intro">
             <h2 class="section-title">What is Data?</h2>
             <div class="intro-box">
-                <p><strong>Data</strong> is a collection of facts and figures. Think about everything around you: numbers, names, student lists, grades, prices—all of that is data!</p>
+                <p style="font-size: 1.1rem;"><strong>Data</strong> is a collection of facts and figures. Think about everything around you: numbers, names, student lists, grades, prices—all of that is data!</p>
             </div>
 
             <div class="content-box">
-                <h3 class="subsection-title">💡 Example</h3>
-                <p>Types of laptops is a collection of facts (Dell, HP, Lenovo, MacBook, etc.). That's data!</p>
-            </div>
-
-            <h2 class="section-title">What is a Data Structure?</h2>
-            <div class="intro-box">
-                <p><strong>A data structure</strong> is a way to store and organize data so we can use it easily. It's like choosing the best filing system for your information.</p>
-            </div>
-
-            <div class="content-box">
-                <h3 class="subsection-title">📝 Example: Laptop Organization</h3>
-                <p>We can organize the same laptops in different ways:</p>
+                <h3 class="subsection-title">💡 Example: Laptop Types</h3>
+                <p style="margin-bottom: 2rem;">Here's how we can visualize a simple list of laptops:</p>
                 
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">As a List/Array:</h4>
-                <div class="example">["Dell", "HP", "Lenovo", "MacBook"]</div>
-
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">As a Queue (FIFO):</h4>
-                <p style="margin-bottom: 0.5rem;">First laptop you add → First one you remove</p>
-
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">As a Stack (LIFO):</h4>
-                <p style="margin-bottom: 0.5rem;">Last laptop you add → First one you remove</p>
-
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">As a Tree:</h4>
-                <div class="tree-diagram">
-Laptop
- ├── Windows
- │    ├── HP
- │    └── Dell
- └── Apple
-      └── MacBook
+                <div class="array-container">
+                    <div class="array-item">
+                        <span class="index">Index: 0</span>
+                        <span class="value">Dell</span>
+                    </div>
+                    <div class="array-item">
+                        <span class="index">Index: 1</span>
+                        <span class="value">HP</span>
+                    </div>
+                    <div class="array-item">
+                        <span class="index">Index: 2</span>
+                        <span class="value">Lenovo</span>
+                    </div>
+                    <div class="array-item">
+                        <span class="index">Index: 3</span>
+                        <span class="value">MacBook</span>
+                    </div>
                 </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 4rem;">What is a Data Structure?</h2>
+            <div class="intro-box">
+                <p style="font-size: 1.1rem;"><strong>A data structure</strong> is a way to store and organize data so we can use it easily. It's like choosing the best filing system for your information.</p>
             </div>
 
             <div class="checkpoint">
                 <div class="checkpoint-title">❓ Checkpoint Question</div>
                 <p style="margin-bottom: 1rem;"><strong>If you had a long list of laptop types and wanted to organize them alphabetically, which operation do you need?</strong></p>
-                <div class="checkpoint-options">
-                    <label class="option">
-                        <input type="radio" name="q1" value="a"> 
-                        <span><strong>A) Insert</strong></span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="b"> 
-                        <span><strong>B) Delete</strong></span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="c"> 
-                        <span><strong>C) Sort</strong> ✓ Correct!</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="d"> 
-                        <span><strong>D) Search</strong></span>
-                    </label>
-                </div>
+                <label class="option">
+                    <input type="radio" name="q1" value="a"> 
+                    <span><strong>A) Insert</strong></span>
+                </label>
+                <label class="option">
+                    <input type="radio" name="q1" value="b"> 
+                    <span><strong>B) Delete</strong></span>
+                </label>
+                <label class="option">
+                    <input type="radio" name="q1" value="c"> 
+                    <span><strong>C) Sort</strong> ✓ Correct!</span>
+                </label>
+                <label class="option">
+                    <input type="radio" name="q1" value="d"> 
+                    <span><strong>D) Search</strong></span>
+                </label>
                 <div class="success-message" id="msg1">✅ Great! Organizing alphabetically requires sorting!</div>
             </div>
         </section>
 
-        <!-- TYPES SECTION -->
         <section id="types">
             <h2 class="section-title">Two Main Types of Data Structures</h2>
 
@@ -506,11 +804,23 @@ Laptop
                 <div class="comparison-item">
                     <h4>📏 Linear Data Structures</h4>
                     <p style="margin-bottom: 1rem;">Data arranged in a line, one after another.</p>
-                    <ul>
-                        <li>Array</li>
-                        <li>Stack</li>
-                        <li>Queue</li>
-                        <li>Linked List</li>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--primary);">→</span>
+                            Array
+                        </li>
+                        <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--primary);">→</span>
+                            Stack
+                        </li>
+                        <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--primary);">→</span>
+                            Queue
+                        </li>
+                        <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--primary);">→</span>
+                            Linked List
+                        </li>
                     </ul>
                     <p style="margin-top: 1rem; font-size: 0.85rem; color: #64748b;"><em>Think of it like a line of people waiting.</em></p>
                 </div>
@@ -518,9 +828,15 @@ Laptop
                 <div class="comparison-item">
                     <h4>🌳 Non-Linear Data Structures</h4>
                     <p style="margin-bottom: 1rem;">Data arranged like a tree or network, not in a line.</p>
-                    <ul>
-                        <li>Tree</li>
-                        <li>Graph</li>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--primary);">→</span>
+                            Tree
+                        </li>
+                        <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--primary);">→</span>
+                            Graph
+                        </li>
                     </ul>
                     <p style="margin-top: 1rem; font-size: 0.85rem; color: #64748b;"><em>Think of it like branches of a family tree.</em></p>
                 </div>
@@ -529,49 +845,35 @@ Laptop
             <div class="checkpoint">
                 <div class="checkpoint-title">❓ Checkpoint Question</div>
                 <p style="margin-bottom: 1rem;"><strong>Which category would "a family tree" belong to?</strong></p>
-                <div class="checkpoint-options">
-                    <label class="option">
-                        <input type="radio" name="q2" value="a"> 
-                        <span><strong>A) Linear</strong></span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q2" value="b"> 
-                        <span><strong>B) Non-linear</strong> ✓ Correct!</span>
-                    </label>
-                </div>
+                <label class="option">
+                    <input type="radio" name="q2" value="a"> 
+                    <span><strong>A) Linear</strong></span>
+                </label>
+                <label class="option">
+                    <input type="radio" name="q2" value="b"> 
+                    <span><strong>B) Non-linear</strong> ✓ Correct!</span>
+                </label>
                 <div class="success-message" id="msg2">✅ Exactly! Family trees branch out, so they're non-linear!</div>
             </div>
         </section>
 
-        <!-- STRUCTURES SECTION -->
         <section id="structures">
             <h2 class="section-title">Learn Each Structure</h2>
 
-            <!-- ARRAYS -->
             <div class="content-box">
-                <h3 class="subsection-title">📦 Arrays (The Simplest Structure)</h3>
-                <p>An array is like a numbered list. Each item has an <span class="highlight">index</span> so you can find it quickly.</p>
+                <h3 class="subsection-title">📚 Stack (LIFO - Last In First Out)</h3>
+                <p style="margin-bottom: 2rem;"><span class="highlight">LIFO = Last In First Out</span>. Think of a stack of plates: you add plates on top, and you remove from the top!</p>
                 
-                <div class="example">
-index:  0      1      2        3
-value:  Dell   HP     Lenovo   MacBook
+                <div class="stack-container" id="stackDemo">
+                    <div class="stack-item">Asus (Last In)</div>
+                    <div class="stack-item">HP</div>
+                    <div class="stack-item">Dell (First In)</div>
                 </div>
 
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">✨ Why Arrays are Useful:</h4>
-                <ul>
-                    <li><strong>Easy access:</strong> Get any item instantly using its index</li>
-                    <li><strong>Good for collections:</strong> Store similar items together</li>
-                </ul>
-            </div>
+                <p style="text-align: center; color: var(--accent); font-weight: 700; margin-top: 1rem;">☝️ Asus will be removed first!</p>
 
-            <!-- STACKS -->
-            <div class="content-box">
-                <h3 class="subsection-title">📚 Stack (LIFO)</h3>
-                <p><span class="highlight">LIFO = Last In First Out</span></p>
-                <p>Think of a stack of plates: you add plates on top, and you remove from the top. You never remove the bottom plate first!</p>
-
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">🌍 Real-Life Examples:</h4>
-                <ul>
+                <h4 style="margin: 2rem 0 1rem; color: var(--primary); font-size: 1.2rem;">🌍 Real-Life Examples:</h4>
+                <ul style="margin-left: 1.5rem;">
                     <li><strong>Undo button (Ctrl+Z):</strong> Last action you did is the first one undone</li>
                     <li><strong>Browser back button:</strong> Last page you visited is shown first</li>
                 </ul>
@@ -579,115 +881,123 @@ value:  Dell   HP     Lenovo   MacBook
                 <div class="checkpoint">
                     <div class="checkpoint-title">❓ Quick Question</div>
                     <p style="margin-bottom: 1rem;"><strong>If you put laptops on a stack in this order: (1) Dell, (2) HP, (3) Asus — Which comes out first?</strong></p>
-                    <div class="checkpoint-options">
-                        <label class="option">
-                            <input type="radio" name="q3" value="a"> 
-                            <span><strong>A) Dell</strong></span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q3" value="b"> 
-                            <span><strong>B) HP</strong></span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q3" value="c"> 
-                            <span><strong>C) Asus</strong> ✓ Correct!</span>
-                        </label>
-                    </div>
+                    <label class="option">
+                        <input type="radio" name="q3" value="a"> 
+                        <span><strong>A) Dell</strong></span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="b"> 
+                        <span><strong>B) HP</strong></span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="c"> 
+                        <span><strong>C) Asus</strong> ✓ Correct!</span>
+                    </label>
                     <div class="success-message" id="msg3">✅ Yes! Asus was last in, so it's first out (LIFO)!</div>
                 </div>
             </div>
 
-            <!-- QUEUES -->
             <div class="content-box">
-                <h3 class="subsection-title">🚶 Queue (FIFO)</h3>
-                <p><span class="highlight">FIFO = First In First Out</span></p>
-                <p>Like waiting in line at a restaurant: the first person in line is served first, and the last person waits the longest.</p>
+                <h3 class="subsection-title">🚶 Queue (FIFO - First In First Out)</h3>
+                <p style="margin-bottom: 2rem;"><span class="highlight">FIFO = First In First Out</span>. Like waiting in line at a restaurant: the first person in line is served first!</p>
+                
+                <div class="queue-container">
+                    <div class="queue-item">Dell<br><small>First In</small></div>
+                    <span class="arrow">→</span>
+                    <div class="queue-item">HP</div>
+                    <span class="arrow">→</span>
+                    <div class="queue-item">Asus<br><small>Last In</small></div>
+                </div>
 
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">📊 Example:</h4>
-                <p>If laptops enter a queue like this: (1) Dell, (2) HP, (3) Asus</p>
-                <p><strong>→ Dell comes out first because it was first in line!</strong></p>
+                <p style="text-align: center; color: var(--success); font-weight: 700; margin-top: 1rem;">👈 Dell will be removed first!</p>
+
+                <h4 style="margin: 2rem 0 1rem; color: var(--primary); font-size: 1.2rem;">🌍 Real-Life Examples:</h4>
+                <ul style="margin-left: 1.5rem;">
+                    <li><strong>Printer queue:</strong> First document sent prints first</li>
+                    <li><strong>Customer service:</strong> First caller gets helped first</li>
+                    <li><strong>Ticket booking:</strong> First person in line gets the ticket first</li>
+                </ul>
             </div>
 
-            <!-- LINKED LISTS -->
             <div class="content-box">
                 <h3 class="subsection-title">⛓️ Linked List (Pointer-Based)</h3>
-                <p>A linked list is like a chain. Each element (called a <span class="highlight">node</span>) has:</p>
-                <ol>
-                    <li><strong>Data</strong> (e.g., "Dell")</li>
-                    <li><strong>A pointer</strong> that tells you where the next node is</li>
-                </ol>
-
-                <div class="example">
-[Dell] → [HP] → [Asus] → [Lenovo] → NULL
-                </div>
-
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">Difference from Arrays:</h4>
-                <div class="comparison-grid">
-                    <div class="comparison-item">
-                        <h4>Array</h4>
-                        <ul>
-                            <li>Stored consecutively in memory</li>
-                            <li>Fast access by index</li>
-                            <li>Fixed size</li>
-                        </ul>
+                <p style="margin-bottom: 2rem;">A linked list is like a chain. Each element (called a <span class="highlight">node</span>) has data and a pointer to the next node.</p>
+                
+                <div class="linked-list-container">
+                    <div class="node">
+                        <div class="node-data">Dell</div>
+                        <div class="node-pointer">→ Next</div>
                     </div>
-                    <div class="comparison-item">
-                        <h4>Linked List</h4>
-                        <ul>
-                            <li>Stored anywhere in memory</li>
-                            <li>Must follow links one by one</li>
-                            <li>Flexible size</li>
-                        </ul>
+                    <span class="link-arrow">→</span>
+                    <div class="node">
+                        <div class="node-data">HP</div>
+                        <div class="node-pointer">→ Next</div>
+                    </div>
+                    <span class="link-arrow">→</span>
+                    <div class="node">
+                        <div class="node-data">Asus</div>
+                        <div class="node-pointer">→ Next</div>
+                    </div>
+                    <span class="link-arrow">→</span>
+                    <div class="node">
+                        <div class="node-data">NULL</div>
+                        <div class="node-pointer">End</div>
                     </div>
                 </div>
 
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">✅ Linked Lists are Great When:</h4>
-                <ul>
+                <h4 style="margin: 2rem 0 1rem; color: var(--primary); font-size: 1.2rem;">✅ Linked Lists are Great When:</h4>
+                <ul style="margin-left: 1.5rem;">
                     <li>You want to easily insert/delete items</li>
                     <li>You don't know how many items you'll have</li>
+                    <li>You need flexible memory allocation</li>
                 </ul>
 
                 <div class="checkpoint">
                     <div class="checkpoint-title">❓ Checkpoint Question</div>
                     <p style="margin-bottom: 1rem;"><strong>In a linked list, does each node store:</strong></p>
-                    <div class="checkpoint-options">
-                        <label class="option">
-                            <input type="radio" name="q4" value="a"> 
-                            <span><strong>A) Only data</strong></span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q4" value="b"> 
-                            <span><strong>B) Data + pointer to next node</strong> ✓ Correct!</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q4" value="c"> 
-                            <span><strong>C) Only pointer</strong></span>
-                        </label>
-                    </div>
+                    <label class="option">
+                        <input type="radio" name="q4" value="a"> 
+                        <span><strong>A) Only data</strong></span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="b"> 
+                        <span><strong>B) Data + pointer to next node</strong> ✓ Correct!</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="c"> 
+                        <span><strong>C) Only pointer</strong></span>
+                    </label>
                     <div class="success-message" id="msg4">✅ Perfect! Both data and a pointer are essential!</div>
                 </div>
             </div>
         </section>
 
-        <!-- ADVANCED SECTION -->
         <section id="advanced">
             <h2 class="section-title">Advanced Structures</h2>
 
-            <!-- TREES -->
             <div class="content-box">
                 <h3 class="subsection-title">🌳 Trees (Non-Linear Structure)</h3>
-                <p>A tree is like an organizational chart or a family tree. It has a starting point called the <span class="highlight">root</span> and branches out.</p>
-
-                <div class="tree-diagram">
-        Laptop
-       /      \
-   Windows    Apple
-    /   \        \
- Dell   HP    MacBook
+                <p style="margin-bottom: 2rem;">A tree is like an organizational chart or a family tree. It has a starting point called the <span class="highlight">root</span> and branches out.</p>
+                
+                <div class="tree-visual">
+                    <div class="tree-level">
+                        <div class="tree-node root">Laptop</div>
+                    </div>
+                    <div style="font-size: 2rem; color: var(--primary); margin: 0.5rem 0;">⬇️</div>
+                    <div class="tree-level">
+                        <div class="tree-node child1">Windows</div>
+                        <div class="tree-node child2">Apple</div>
+                    </div>
+                    <div style="font-size: 2rem; color: var(--primary); margin: 0.5rem 0;">⬇️</div>
+                    <div class="tree-level">
+                        <div class="tree-node leaf">Dell</div>
+                        <div class="tree-node leaf">HP</div>
+                        <div class="tree-node leaf">MacBook</div>
+                    </div>
                 </div>
 
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">✨ Why Trees are Useful:</h4>
-                <ul>
+                <h4 style="margin: 2rem 0 1rem; color: var(--primary); font-size: 1.2rem;">✨ Why Trees are Useful:</h4>
+                <ul style="margin-left: 1.5rem;">
                     <li><strong>Organize hierarchically:</strong> Perfect for folders, menus, org charts</li>
                     <li><strong>Search very fast:</strong> Especially in binary search trees</li>
                     <li><strong>Decision-making:</strong> Used in game AI and complex logic</li>
@@ -695,58 +1005,46 @@ value:  Dell   HP     Lenovo   MacBook
 
                 <div class="checkpoint">
                     <div class="checkpoint-title">❓ Quick Check</div>
-                    <p style="margin-bottom: 1rem;"><strong>What is the root of this tree?</strong></p>
-                    <div class="tree-diagram" style="margin-bottom: 1rem;">
-    Animals
-    /        \
-Mammals     Birds
-   |
- Cats
-                    </div>
-                    <div class="checkpoint-options">
-                        <label class="option">
-                            <input type="radio" name="q5" value="a"> 
-                            <span><strong>A) Cats</strong></span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q5" value="b"> 
-                            <span><strong>B) Animals</strong> ✓ Correct!</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q5" value="c"> 
-                            <span><strong>C) Mammals</strong></span>
-                        </label>
-                    </div>
+                    <p style="margin-bottom: 1rem;"><strong>What is the root of the tree above?</strong></p>
+                    <label class="option">
+                        <input type="radio" name="q5" value="a"> 
+                        <span><strong>A) Dell</strong></span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="b"> 
+                        <span><strong>B) Laptop</strong> ✓ Correct!</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="c"> 
+                        <span><strong>C) Windows</strong></span>
+                    </label>
                     <div class="success-message" id="msg5">✅ Correct! The root is always the starting point at the top!</div>
                 </div>
             </div>
 
-            <!-- GRAPHS -->
             <div class="content-box">
                 <h3 class="subsection-title">🕸️ Graphs (Also Non-Linear)</h3>
-                <p>A graph is a set of nodes connected by lines.</p>
-
-                <div class="example">
-    A —— B
-    |    |
-    C —— D
+                <p style="margin-bottom: 2rem;">A graph is a set of <span class="highlight">nodes</span> (vertices) connected by <span class="highlight">lines</span> (edges).</p>
+                
+                <div class="graph-container">
+                    <div class="graph-nodes">
+                        <div class="graph-node" style="top: 20px; left: 20px;">A</div>
+                        <div class="graph-node" style="top: 20px; right: 20px;">B</div>
+                        <div class="graph-node" style="bottom: 20px; left: 20px;">C</div>
+                        <div class="graph-node" style="bottom: 20px; right: 20px;">D</div>
+                    </div>
                 </div>
 
-                <ul>
-                    <li><strong>Nodes</strong> = vertices</li>
-                    <li><strong>Lines</strong> = edges</li>
-                </ul>
-
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">🌍 Real-Life Examples:</h4>
-                <ul>
+                <h4 style="margin: 2rem 0 1rem; color: var(--primary); font-size: 1.2rem;">🌍 Real-Life Examples:</h4>
+                <ul style="margin-left: 1.5rem;">
                     <li><strong>Google Maps:</strong> Roads connecting cities</li>
                     <li><strong>Social Networks:</strong> Facebook friends and connections</li>
                     <li><strong>Flight Routes:</strong> Airlines connecting airports</li>
                     <li><strong>Internet:</strong> Computers and servers connected</li>
                 </ul>
 
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">🤔 What Graphs Help Answer:</h4>
-                <ul>
+                <h4 style="margin: 2rem 0 1rem; color: var(--primary); font-size: 1.2rem;">🤔 What Graphs Help Answer:</h4>
+                <ul style="margin-left: 1.5rem;">
                     <li>What is the shortest path from A to B?</li>
                     <li>How many connections does this node have?</li>
                     <li>Can we travel from point A to point D?</li>
@@ -755,53 +1053,33 @@ Mammals     Birds
                 <div class="checkpoint">
                     <div class="checkpoint-title">❓ Final Question</div>
                     <p style="margin-bottom: 1rem;"><strong>Which real-life example is a graph?</strong></p>
-                    <div class="checkpoint-options">
-                        <label class="option">
-                            <input type="radio" name="q6" value="a"> 
-                            <span><strong>A) A queue at the cinema</strong></span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q6" value="b"> 
-                            <span><strong>B) A family tree</strong></span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q6" value="c"> 
-                            <span><strong>C) A map of cities connected by roads</strong> ✓ Correct!</span>
-                        </label>
-                    </div>
+                    <label class="option">
+                        <input type="radio" name="q6" value="a"> 
+                        <span><strong>A) A queue at the cinema</strong></span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="b"> 
+                        <span><strong>B) A family tree</strong></span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="c"> 
+                        <span><strong>C) A map of cities connected by roads</strong> ✓ Correct!</span>
+                    </label>
                     <div class="success-message" id="msg6">✅ Exactly! A map has nodes (cities) and edges (roads)—that's a graph!</div>
                 </div>
             </div>
         </section>
 
-        <!-- SUMMARY SECTION -->
-        <section style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 2rem; border-radius: 12px; color: white; margin-bottom: 3rem;">
-            <h2 class="section-title" style="color: white; margin-bottom: 1.5rem;">
-                🎓 Key Takeaways
-            </h2>
-            <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0;">✓</span>
-                    <strong>Data</strong> = Facts and figures
-                </li>
-                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0;">✓</span>
-                    <strong>Data Structure</strong> = Organized way to store and access data
-                </li>
-                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0;">✓</span>
-                    <strong>Linear</strong> structures (Array, Stack, Queue, Linked List) arrange data in a line
-                </li>
-                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0;">✓</span>
-                    <strong>Non-linear</strong> structures (Tree, Graph) arrange data with branches or connections
-                </li>
-                <li style="padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0;">✓</span>
-                    Choose the right structure for your problem = Better performance!
-                </li>
+        <div class="summary-box">
+            <h2 class="section-title" style="color: white;">🎓 Key Takeaways</h2>
+            <ul>
+                <li><strong>Data</strong> = Facts and figures</li>
+                <li><strong>Data Structure</strong> = Organized way to store and access data</li>
+                <li><strong>Linear</strong> structures (Array, Stack, Queue, Linked List) arrange data in a line</li>
+                <li><strong>Non-linear</strong> structures (Tree, Graph) arrange data with branches or connections</li>
+                <li>Choose the right structure for your problem = Better performance!</li>
             </ul>
-        </section>
+        </div>
     </main>
 
     <footer>
@@ -809,13 +1087,11 @@ Mammals     Birds
     </footer>
 
     <script>
-        // Smooth scrolling for navigation
         function scrollToSection(sectionId) {
             const element = document.getElementById(sectionId);
             element.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Handle checkpoint questions
         document.querySelectorAll('input[type="radio"]').forEach(input => {
             input.addEventListener('change', function() {
                 const name = this.name;
@@ -831,22 +1107,69 @@ Mammals     Birds
             });
         });
 
-        // Add scroll animation for content boxes
+        // Draw graph edges dynamically
+        window.addEventListener('load', function() {
+            const graphContainer = document.querySelector('.graph-nodes');
+            if (!graphContainer) return;
+            
+            const nodes = graphContainer.querySelectorAll('.graph-node');
+            if (nodes.length < 4) return;
+
+            const connections = [
+                [0, 1], // A-B
+                [0, 2], // A-C
+                [1, 3], // B-D
+                [2, 3]  // C-D
+            ];
+
+            connections.forEach(([from, to], index) => {
+                setTimeout(() => {
+                    const fromNode = nodes[from];
+                    const toNode = nodes[to];
+                    const fromRect = fromNode.getBoundingClientRect();
+                    const toRect = toNode.getBoundingClientRect();
+                    const containerRect = graphContainer.getBoundingClientRect();
+
+                    const fromX = fromRect.left + fromRect.width / 2 - containerRect.left;
+                    const fromY = fromRect.top + fromRect.height / 2 - containerRect.top;
+                    const toX = toRect.left + toRect.width / 2 - containerRect.left;
+                    const toY = toRect.top + toRect.height / 2 - containerRect.top;
+
+                    const length = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2));
+                    const angle = Math.atan2(toY - fromY, toX - fromX) * (180 / Math.PI);
+
+                    const edge = document.createElement('div');
+                    edge.className = 'graph-edge';
+                    edge.style.width = length + 'px';
+                    edge.style.left = fromX + 'px';
+                    edge.style.top = fromY + 'px';
+                    edge.style.transform = `rotate(${angle}deg)`;
+                    edge.style.animationDelay = (index * 0.3) + 's';
+
+                    graphContainer.appendChild(edge);
+                }, 500);
+            });
+        });
+
+        // Intersection Observer for scroll animations
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animation = 'slideIn 0.6s ease-out';
-                    observer.unobserve(entry.target);
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
         }, observerOptions);
 
         document.querySelectorAll('.content-box').forEach(box => {
+            box.style.opacity = '0';
+            box.style.transform = 'translateY(20px)';
+            box.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
             observer.observe(box);
         });
     </script>
